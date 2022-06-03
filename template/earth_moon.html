@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+<style>
+    canvas {
+        padding-left: 0;
+        padding-right: 0;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+        width: 800px;
+    }
+</style>
+
+<script id="vertex-shader" type="x-shader/x-vertex">
+
+// assume both position and normal are in homogeneous form
+
+attribute vec4 vPosition;
+attribute vec4 vNormal;
+attribute  vec2 vTexCoord;
+
+varying vec4 fColor;
+varying vec2 fTexCoord;
+
+uniform vec3 theta;
+
+uniform vec4 ambientProduct, diffuseProduct, specularProduct;
+uniform mat4 modelViewMatrix;
+uniform mat4 projectionMatrix;
+uniform vec4 lightPosition;
+uniform float shininess;
+uniform mat3 normalMatrix;
+
+void
+main()
+{
+    // pos is vertex position in eye coordinates
+    
+    vec3 pos = (modelViewMatrix * vPosition).xyz;
+    
+    // vector from vertex position to light source
+    
+    vec3 L;
+    
+    // check for directional light
+    
+    if(lightPosition.w == 0.0) L = normalize(lightPosition.xyz);
+    else L = normalize( lightPosition.xyz - pos );
+
+    // Because the eye point the is at the orgin
+    // the vector from the vertex position to the eye is
+    	
+    vec3 E = -normalize( pos );
+    
+    // halfway vector
+    
+    vec3 H = normalize( L + E );
+
+    // Transform vertex normal into eye coordinates
+    
+    vec3 N = normalize( normalMatrix*vNormal.xyz);
+
+
+    // Compute terms in the illumination equation
+    vec4 ambient = ambientProduct;
+
+    float Kd = max( dot(L, N), 0.0 );
+    vec4  diffuse = Kd*diffuseProduct;
+
+    float Ks = pow( max(dot(N, H), 0.0), shininess );
+    vec4  specular = Ks * specularProduct;
+    
+    if( dot(L, N) < 0.0 ) {
+	specular = vec4(0.0, 0.0, 0.0, 1.0);
+    } 
+
+    gl_Position = projectionMatrix * modelViewMatrix * vPosition;
+
+    fTexCoord = vTexCoord;
+
+    fColor = ambient + diffuse + specular;
+
+    fColor.a = 1.0;
+}
+</script>
+
+<script id="fragment-shader" type="x-shader/x-fragment">
+
+precision mediump float;
+
+varying vec4 fColor;
+varying vec2 fTexCoord;
+
+uniform sampler2D texture;
+uniform sampler2D textureCloud;
+
+void
+main()
+{   
+    vec4 color = texture2D(texture, fTexCoord);
+    vec4 colorCloud = texture2D(textureCloud, fTexCoord);
+
+    gl_FragColor = fColor * (color + colorCloud);
+    gl_FragColor.a = 1.0;
+
+}
+</script>
+
+<script type="text/javascript" src="../common/webgl-utils.js"></script>
+<script type="text/javascript" src="../common/initShaders.js"></script>
+
+<script type="text/javascript" src="../common/MV.js"></script>
+<script type="text/javascript" src="earth_moon.js"></script>
+
+<body style="background-color:rgb(0, 0, 0);">
+<canvas id="gl-canvas" width="1024" height="1024" style="background-color:rgb(0, 0, 0);">
+Oops ... your browser doesn't support the HTML5 canvas element
+</canvas>
+
+<img id = "texEarth" src = "../assets/8k_earth_daymap.jpg" hidden></img>
+<img id = "texEarthCloud" src = "../assets/8k_earth_clouds.jpg" hidden></img>
+<img id = "texMoon" src = "../assets/8k_moon.jpg" hidden></img>
+
+</body>
+</html>
