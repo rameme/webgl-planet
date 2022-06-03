@@ -486,6 +486,33 @@ function selectObjectListener() {
         setLighting()
     };
 
+    document.getElementById("mars").onclick = function(){
+        gl.deleteTexture(texturePlanet);
+        gl.deleteTexture(textureAtmosphere);
+
+        rotateClockwise = 0;
+        rotateCounterClockwise = 1;
+        roateSide = 0;
+
+        var image = new Image();
+        image.onload = function() {
+            configureTexture( image, 0 );
+        }
+        image.src = "assets/8k_mars.jpg"
+
+        lightPosition = vec4(-10.0, 0.0, 0.0, 0.0 );
+        lightAmbient = vec4(1.0, 1.0, 1.0, 1.0 );
+        lightDiffuse = vec4( 1.0, 1.0, 1.0, 1.0 );
+        lightSpecular = vec4( 1.0, 1.0, 1.0, 1.0 );
+
+        materialAmbient = vec4( 0.2, 0.2, 0.2, 1.0 );
+        materialDiffuse = vec4( 1.0, 1.0, 1.0, 1.0 );
+        materialSpecular = vec4( 0.0, 0.0, 0.0, 1.0 );
+        materialShininess = 100.0;
+
+        setLighting()
+    };
+
     document.getElementById("jupiter").onclick = function(){
         gl.deleteTexture(texturePlanet);
         gl.deleteTexture(textureAtmosphere);
