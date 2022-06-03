@@ -8,9 +8,9 @@
 ![](./assets/screenshots/earth_moon.png)
 
 ## Links
-[Webgl Planet](https://rameme.github.io/webgl-planet/)
-[Webgl Earth Moon](https://rameme.github.io/webgl-planet/template/earth_moon.html)
+- [Webgl Planet](https://rameme.github.io/webgl-planet/)
+- [Webgl Earth Moon](https://rameme.github.io/webgl-planet/template/earth_moon.html)
 
 ## Author
-Name: Ramim 
-Github: [https://github.com/rameme](https://github.com/rameme)
+- Name: Ramim 
+- Github: [https://github.com/rameme](https://github.com/rameme)
