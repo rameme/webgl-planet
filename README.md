@@ -1,12 +1,16 @@
 # Webgl Planet
 3D Render of earth and moon using WebGl.
 
-```
-Click on the gif to view project
-```
-
 ## Planet
-[![Planet](https://media.giphy.com/media/LCBqDl5aSaALReaOyg/giphy.gif)](https://rameme.github.io/webgl-planet/)
+![](./assets/screenshots/planet.png)
 
 ## Earth moon
-[![Earth moon](https://media.giphy.com/media/6jlCmaW10kGOkPY2Lz/giphy.gif)](https://rameme.github.io/webgl-planet/template/earth_moon.html)
+![](./assets/screenshots/earth_moon.png)
+
+## Links
+[Webgl Planet](https://rameme.github.io/webgl-planet/)
+[Webgl Earth Moon](https://rameme.github.io/webgl-planet/template/earth_moon.html)
+
+## Author
+Name: Ramim 
+Github: [https://github.com/rameme](https://github.com/rameme)
